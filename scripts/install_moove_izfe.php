@@ -1,5 +1,5 @@
 <?php
-// Installs the IZFE-customized Moove theme into a Moodle site.
+// Installs the IZFE Moodle theme folder into a Moodle site.
 
 define('CLI_SCRIPT', true);
 
@@ -20,15 +20,21 @@ if ($moodleRoot === false || !is_file($moodleRoot . '/config.php')) {
 require_once($moodleRoot . '/config.php');
 require_once($CFG->libdir . '/filelib.php');
 
-$sourceTheme = $repoRoot . '/theme/moove';
-$targetTheme = $moodleRoot . '/theme/moove';
+$sourceTheme = $repoRoot . '/theme';
+$targetTheme = $moodleRoot . '/theme';
 $configFile = $repoRoot . '/config/theme_moove_export.json';
 $assetRoot = $repoRoot . '/assets/theme_moove_files';
 $langOverrideRoot = $repoRoot . '/assets/lang_overrides';
 
 if (!is_dir($sourceTheme)) {
-    fwrite(STDERR, "Missing source theme: {$sourceTheme}\n");
+    fwrite(STDERR, "Missing source theme folder: {$sourceTheme}\n");
     exit(1);
+}
+foreach (['boost', 'classic', 'moove'] as $requiredTheme) {
+    if (!is_dir($sourceTheme . '/' . $requiredTheme)) {
+        fwrite(STDERR, "Missing required theme: {$sourceTheme}/{$requiredTheme}\n");
+        exit(1);
+    }
 }
 if (!is_file($configFile)) {
     fwrite(STDERR, "Missing exported config: {$configFile}\n");
@@ -117,8 +123,16 @@ foreach (($config['moodle_config'] ?? []) as $name => $value) {
 }
 set_config('theme', 'moove');
 
-foreach (($config['theme_moove'] ?? []) as $name => $value) {
-    set_config($name, $value, 'theme_moove');
+if (!empty($config['theme_plugins']) && is_array($config['theme_plugins'])) {
+    foreach ($config['theme_plugins'] as $plugin => $settings) {
+        foreach ($settings as $name => $value) {
+            set_config($name, $value, $plugin);
+        }
+    }
+} else {
+    foreach (($config['theme_moove'] ?? []) as $name => $value) {
+        set_config($name, $value, 'theme_moove');
+    }
 }
 
 $fs = get_file_storage();
@@ -182,8 +196,8 @@ if (function_exists('purge_all_caches')) {
     purge_all_caches();
 }
 
-echo "IZFE Moove theme installed in {$targetTheme}\n";
+echo "IZFE theme folder installed in {$targetTheme}\n";
 if ($backup !== null) {
-    echo "Previous theme backup: {$backup}\n";
+    echo "Previous theme folder backup: {$backup}\n";
 }
-echo "Theme set to moove and theme_moove settings restored.\n";
+echo "Theme set to moove and theme plugin settings restored.\n";
