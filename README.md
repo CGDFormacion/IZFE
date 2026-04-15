@@ -7,7 +7,7 @@ Este repositorio contiene lo necesario para reproducir el aspecto de `https://pr
 - `theme`: copia completa de la carpeta de temas Moodle activa, incluyendo `boost`, `classic` y `moove`.
 - `assets/theme_moove_files`: logo, favicon, fondo de acceso y slider subidos desde la configuración del tema.
 - `assets/lang_overrides`: overrides de idioma de `moodledata/lang` para `theme_moove`.
-- `config/theme_moove_export.json`: configuración exportada de `mdl_config` y `mdl_config_plugins` para los temas `boost`, `classic` y `moove`.
+- `config/theme_moove_export.json`: configuración exportada de `mdl_config`, datos de portada y `mdl_config_plugins` para los temas `boost`, `classic` y `moove`.
 - `scripts/install_moove_izfe.php`: instalador para aplicar la carpeta completa de temas en un contenedor destino.
 
 ## Instalación en el contenedor destino
@@ -26,7 +26,7 @@ En la instalación actual de origen la ruta web real es `/var/www/ripollet/publi
 php scripts/install_moove_izfe.php /var/www/ripollet/public
 ```
 
-El instalador hace una copia de seguridad de la carpeta `theme` existente antes de reemplazarla, restaura los ficheros del tema usando la API de Moodle, copia los overrides de idioma, configura `theme=moove` y purga caches.
+El instalador hace una copia de seguridad de la carpeta `theme` existente antes de reemplazarla, restaura los ficheros del tema usando la API de Moodle, copia los overrides de idioma, aplica el HTML adicional de cabecera/pie, configura `theme=moove` y purga caches.
 
 ## Después de instalar
 

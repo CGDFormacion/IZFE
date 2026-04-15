@@ -1,8 +1,28 @@
 {
     "exported_from": "https://pruebaizfe.cgdformacion.com",
     "moodle_config": {
+        "additionalhtmlfooter": "<script src=\"https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js\" data-cfasync=\"false\"></script>\r\n<script>\r\nwindow.cookieconsent.initialise({\r\n  \"palette\": {\r\n    \"popup\": {\r\n      \"background\": \"#FFF000\"\r\n    },\r\n    \"button\": {\r\n      \"background\": \"#fff\",\r\n      \"text\": \"#237afc\"\r\n    }\r\n  },\r\n  \"content\": {\r\n    \"message\": \"Webgune honek cookieak erabiltzen ditu nabigazio-esperientzia hobea eskaintzeko.\",\r\n    \"dismiss\": \"Ulertuta.\",\r\n    \"link\": \"Gehiago jakin.\",\r\n    \"href\": \"https://www.ripollet.cat/politica-de-galetes\"\r\n  }\r\n});\r\n</script>\r\n",
+        "additionalhtmlhead": "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css\" />",
+        "additionalhtmltopofbody": "",
         "allowthemechangeonurl": "0",
-        "theme": "moove"
+        "autolang": "0",
+        "cachejs": "1",
+        "custommenuitems": "",
+        "defaulthomepage": "1",
+        "forcelogin": "0",
+        "frontpage": "",
+        "frontpageloggedin": "7,6",
+        "langlist": "es | Español, eu | Euskara",
+        "langmenu": "1",
+        "navshowmycoursecategories": "0",
+        "theme": "moove",
+        "themedesignermode": "0"
+    },
+    "site_course": {
+        "fullname": "Gela Birtuala",
+        "shortname": "Gela Birtuala",
+        "summary": "",
+        "format": "site"
     },
     "theme_plugins": {
         "theme_boost": {

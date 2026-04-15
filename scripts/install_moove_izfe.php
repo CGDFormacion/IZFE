@@ -19,6 +19,7 @@ if ($moodleRoot === false || !is_file($moodleRoot . '/config.php')) {
 
 require_once($moodleRoot . '/config.php');
 require_once($CFG->libdir . '/filelib.php');
+require_once($CFG->libdir . '/datalib.php');
 
 $sourceTheme = $repoRoot . '/theme';
 $targetTheme = $moodleRoot . '/theme';
@@ -122,6 +123,23 @@ foreach (($config['moodle_config'] ?? []) as $name => $value) {
     set_config($name, $value);
 }
 set_config('theme', 'moove');
+
+if (!empty($config['site_course']) && is_array($config['site_course'])) {
+    global $DB;
+
+    $site = get_site();
+    $updates = [];
+    foreach (['fullname', 'shortname', 'summary', 'format'] as $field) {
+        if (array_key_exists($field, $config['site_course'])) {
+            $updates[$field] = $config['site_course'][$field];
+        }
+    }
+
+    if ($updates) {
+        $updates['id'] = $site->id;
+        $DB->update_record('course', (object) $updates);
+    }
+}
 
 if (!empty($config['theme_plugins']) && is_array($config['theme_plugins'])) {
     foreach ($config['theme_plugins'] as $plugin => $settings) {
