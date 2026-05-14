@@ -213,14 +213,11 @@
             <div id="page-content" class="d-print-block main-inner">
                 <div id="region-main-box">
                     <section id="region-main" aria-label="{{#str}}content{{/str}}">
-                        {{#showfrontpagemaincontent}}
+                        <div class="{{^showfrontpagemaincontent}}d-none{{/showfrontpagemaincontent}}">
                             {{{ output.course_content_header }}}
                             {{{ output.main_content }}}
                             {{{ output.course_content_footer }}}
-                        {{/showfrontpagemaincontent}}
-                        {{^showfrontpagemaincontent}}
-                            <div role="main"><span id="maincontent"></span><br></div>
-                        {{/showfrontpagemaincontent}}
+                        </div>
                     </section>
                 </div>
             </div>
