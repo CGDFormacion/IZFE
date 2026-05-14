@@ -99,7 +99,7 @@
     }
 }
 
-#page-site-index.notloggedin {
+#page-site-index.izfe-public-frontpage {
     #page {
         background-color: var(--moove-bg-white) !important;
     }
@@ -577,7 +577,7 @@
         box-shadow: none;
     }
 
-    #page-site-index.notloggedin {
+    #page-site-index.izfe-public-frontpage {
         .footer-content-popover .footer-section {
             text-align: center;
         }
@@ -618,7 +618,7 @@
 }
 
 @media (max-width: 576px) {
-    #page-site-index.notloggedin {
+    #page-site-index.izfe-public-frontpage {
         #mooveslideshow {
             .carousel-caption {
                 padding: .58rem .9rem .28rem;
