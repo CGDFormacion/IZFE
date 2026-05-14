@@ -108,18 +108,13 @@ $templatecontext = [
     'overflow' => $overflow,
     'headercontent' => $headercontent,
     'addblockbutton' => $addblockbutton,
-    'showcustomnavsearch' => !isloggedin(),
+    'showcustomnavsearch' => true,
+    'showfrontpagemaincontent' => !isloggedin() || $PAGE->user_is_editing(),
 ];
 
 $themesettings = new \theme_moove\util\settings();
 
+$templatecontext = array_merge($templatecontext, $themesettings->frontpage());
 $templatecontext = array_merge($templatecontext, $themesettings->footer());
 
-$template = 'theme_moove/drawers';
-if (!isloggedin()) {
-    $templatecontext = array_merge($templatecontext, $themesettings->frontpage());
-
-    $template = 'theme_moove/frontpage';
-}
-
-echo $OUTPUT->render_from_template($template, $templatecontext);
+echo $OUTPUT->render_from_template('theme_moove/frontpage', $templatecontext);
