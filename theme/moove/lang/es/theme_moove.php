@@ -35,3 +35,4 @@ $string['frontpagecoursesimagealt'] = 'Cursos del plan de formación';
 $string['coursecataloglabel'] = 'Catálogo de cursos';
 $string['coursesinspanish'] = 'Cursos en castellano';
 $string['coursesinbasque'] = 'Cursos en euskera';
+$string['viewcoursebutton'] = 'Ver curso';

@@ -1,0 +1,68 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core_course/coursecard
+
+    Theme override to align the course action button with the catalogue cards.
+}}
+<div class="card course-card mx-1" role="listitem"
+    data-region="course-content"
+    data-course-id="{{{id}}}">
+    <a href="{{viewurl}}" tabindex="-1">
+        <div class="card-img-top" style='background-image: url("{{{courseimage}}}");'>
+            <span class="visually-hidden">{{fullname}}</span>
+        </div>
+    </a>
+    <div class="card-body pe-1 course-info-container" id="course-info-container-{{id}}-{{uniqid}}">
+        <div class="d-flex align-items-start">
+            <div class="w-100 text-truncate">
+                {{#showshortname}}
+                    <div class="text-muted muted d-flex mb-1 flex-wrap">
+                        <span class="visually-hidden">
+                            {{#str}}aria:courseshortname, core_course{{/str}}
+                        </span>
+                        <div>
+                            {{{shortname}}}
+                        </div>
+                    </div>
+                {{/showshortname}}
+                <a href="{{viewurl}}" class="aalink coursename me-2 mb-1">
+                    {{> core_course/favouriteicon }}
+                    <span class="visually-hidden">
+                        {{#str}}aria:coursename, core_course{{/str}}
+                    </span>
+                    {{$coursename}}{{/coursename}}
+                </a>
+                <div class="text-muted muted d-flex flex-wrap">
+                    {{$coursecategory}}{{/coursecategory}}
+                </div>
+                {{^visible}}
+                    <div class="d-flex flex-wrap">
+                        <span class="badge bg-info text-white">{{#str}} hiddenfromstudents {{/str}}</span>
+                    </div>
+                {{/visible}}
+            </div>
+        </div>
+    </div>
+    <div class="izfe-course-card__actions">
+        <a href="{{viewurl}}" class="btn btn-primary izfe-course-card__button">{{#str}}viewcoursebutton, theme_moove{{/str}}</a>
+    </div>
+    <div class="d-flex align-items-start">
+        {{$progress}}{{/progress}}
+        {{$menu}}{{/menu}}
+    </div>
+</div>

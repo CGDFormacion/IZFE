@@ -34,6 +34,26 @@
     .card-body.course-info-container .coursename .text-truncate {
         white-space: initial;
     }
+
+}
+
+.dashboard-card,
+.course-card {
+    .izfe-course-card__actions {
+        padding: 0 .8rem .8rem;
+    }
+
+    .izfe-course-card__button {
+        align-items: center;
+        display: inline-flex;
+        font-size: .9rem;
+        font-weight: 600;
+        justify-content: center;
+        margin: 0;
+        min-height: 40px;
+        text-align: center;
+        width: 100%;
+    }
 }
 
 .block .block-cards .moove-card-footer {

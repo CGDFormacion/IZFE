@@ -221,3 +221,4 @@ $string['frontpagenewstaffimagealt'] = 'Training for new staff';
 $string['frontpagecoursestitle'] = 'Training plan courses';
 $string['frontpagecoursesbutton'] = 'Training plan courses';
 $string['frontpagecoursesimagealt'] = 'Training plan courses';
+$string['viewcoursebutton'] = 'View course';
