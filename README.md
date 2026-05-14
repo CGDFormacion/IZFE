@@ -8,6 +8,7 @@ Este repositorio contiene lo necesario para reproducir el aspecto de `https://pr
 - `assets/theme_moove_files`: logo, favicon, fondo de acceso y slider subidos desde la configuración del tema.
 - `assets/lang_overrides`: overrides de idioma de `moodledata/lang` para `theme_moove`.
 - `config/theme_moove_export.json`: configuración exportada de `mdl_config`, datos de portada y `mdl_config_plugins` para los temas `boost`, `classic` y `moove`.
+- `config/category_language_subcategories.json`: estructura de subcategorías por idioma para las categorías principales.
 - `scripts/install_moove_izfe.php`: instalador para aplicar la carpeta completa de temas en un contenedor destino.
 
 ## Instalación en el contenedor destino

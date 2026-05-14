@@ -33,3 +33,5 @@ $string['frontpagecoursestitle'] = 'Prestakuntza planeko ikastaroak';
 $string['frontpagecoursesbutton'] = 'Prestakuntza planeko ikastaroak';
 $string['frontpagecoursesimagealt'] = 'Prestakuntza planeko ikastaroak';
 $string['coursecataloglabel'] = 'Ikastaroen katalogoa';
+$string['coursesinspanish'] = 'Gaztelaniazko ikastaroak';
+$string['coursesinbasque'] = 'Euskarazko ikastaroak';

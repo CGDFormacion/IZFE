@@ -1,0 +1,43 @@
+{
+  "parents": [
+    {
+      "name": "Guías y manuales",
+      "children": [
+        {
+          "name": "Cursos en castellano",
+          "idnumber": "lang-es-guides"
+        },
+        {
+          "name": "Cursos en euskera",
+          "idnumber": "lang-eu-guides"
+        }
+      ]
+    },
+    {
+      "name": "Formación para nuevas incorporaciones",
+      "children": [
+        {
+          "name": "Cursos en castellano",
+          "idnumber": "lang-es-newstaff"
+        },
+        {
+          "name": "Cursos en euskera",
+          "idnumber": "lang-eu-newstaff"
+        }
+      ]
+    },
+    {
+      "name": "Cursos del plan de formación",
+      "children": [
+        {
+          "name": "Cursos en castellano",
+          "idnumber": "lang-es-plan"
+        },
+        {
+          "name": "Cursos en euskera",
+          "idnumber": "lang-eu-plan"
+        }
+      ]
+    }
+  ]
+}

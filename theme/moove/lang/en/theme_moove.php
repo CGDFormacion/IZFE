@@ -115,6 +115,8 @@ $string['numbersfrontpagecontentdefault'] = '<h2>Trusted by 25,000+ happy custom
 $string['numbersusers'] = 'Active users accessing our amazing resources';
 $string['numberscourses'] = 'Courses made for you that you can trust!';
 $string['coursecataloglabel'] = 'Course catalogue';
+$string['coursesinspanish'] = 'Courses in Spanish';
+$string['coursesinbasque'] = 'Courses in Basque';
 
 $string['faq'] = 'FAQ';
 $string['faqcount'] = 'FAQ questions';

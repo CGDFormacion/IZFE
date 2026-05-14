@@ -24,6 +24,7 @@ require_once($CFG->libdir . '/datalib.php');
 $sourceTheme = $repoRoot . '/theme';
 $targetTheme = $moodleRoot . '/theme';
 $configFile = $repoRoot . '/config/theme_moove_export.json';
+$categoryStructureFile = $repoRoot . '/config/category_language_subcategories.json';
 $assetRoot = $repoRoot . '/assets/theme_moove_files';
 $langOverrideRoot = $repoRoot . '/assets/lang_overrides';
 
@@ -46,6 +47,15 @@ $config = json_decode(file_get_contents($configFile), true);
 if (!is_array($config)) {
     fwrite(STDERR, "Invalid JSON in {$configFile}\n");
     exit(1);
+}
+
+$categoryStructure = [];
+if (is_file($categoryStructureFile)) {
+    $categoryStructure = json_decode(file_get_contents($categoryStructureFile), true);
+    if (!is_array($categoryStructure)) {
+        fwrite(STDERR, "Invalid JSON in {$categoryStructureFile}\n");
+        exit(1);
+    }
 }
 
 function izfe_copy_dir(string $source, string $target): void {
@@ -212,6 +222,40 @@ if (is_dir($langOverrideRoot)) {
 
 if (function_exists('purge_all_caches')) {
     purge_all_caches();
+}
+
+if (!empty($categoryStructure['parents']) && is_array($categoryStructure['parents'])) {
+    global $DB;
+
+    foreach ($categoryStructure['parents'] as $parentConfig) {
+        if (empty($parentConfig['name']) || empty($parentConfig['children']) || !is_array($parentConfig['children'])) {
+            continue;
+        }
+
+        $parents = $DB->get_records('course_categories', ['name' => $parentConfig['name']]);
+        foreach ($parents as $parentCategory) {
+            foreach ($parentConfig['children'] as $childConfig) {
+                if (empty($childConfig['name']) || empty($childConfig['idnumber'])) {
+                    continue;
+                }
+
+                $existing = $DB->get_record('course_categories', [
+                    'parent' => $parentCategory->id,
+                    'idnumber' => $childConfig['idnumber'],
+                ]);
+                if ($existing) {
+                    continue;
+                }
+
+                \core_course_category::create([
+                    'name' => $childConfig['name'],
+                    'idnumber' => $childConfig['idnumber'],
+                    'parent' => $parentCategory->id,
+                    'visible' => 1,
+                ]);
+            }
+        }
+    }
 }
 
 echo "IZFE theme folder installed in {$targetTheme}\n";

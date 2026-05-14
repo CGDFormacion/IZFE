@@ -46,7 +46,7 @@ class core_renderer extends \theme_boost\output\core_renderer {
      * @return bool
      */
     protected function should_show_course_catalog_heading(): bool {
-        return isloggedin() && !isguestuser() && $this->page->pagetype === 'course-index-category';
+        return $this->page->pagetype === 'course-index-category';
     }
 
     /**

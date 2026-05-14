@@ -110,7 +110,7 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton,
     'showcustomnavsearch' => true,
     'showfrontpagemaincontent' => !isloggedin() || $PAGE->user_is_editing(),
-    'showcoursecatalogheading' => isloggedin() && !isguestuser(),
+    'showcoursecatalogheading' => true,
 ];
 
 $themesettings = new \theme_moove\util\settings();

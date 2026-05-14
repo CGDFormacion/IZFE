@@ -95,6 +95,38 @@ $header = $PAGE->activityheader;
 $headercontent = $header->export_for_template($renderer);
 
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
+$categorylanguagecards = [];
+$showcategorymaincontent = true;
+if ($PAGE->pagetype === 'course-index-category') {
+    $categoryid = $PAGE->url->get_param('categoryid');
+    if (!empty($categoryid)) {
+        $currentcategory = \core_course_category::get($categoryid, IGNORE_MISSING);
+        if ($currentcategory) {
+            foreach ($currentcategory->get_children() as $childcategory) {
+                if (empty($childcategory->visible)) {
+                    continue;
+                }
+
+                $label = $childcategory->get_formatted_name();
+                if (str_starts_with((string) $childcategory->idnumber, 'lang-es')) {
+                    $label = get_string('coursesinspanish', 'theme_moove');
+                } else if (str_starts_with((string) $childcategory->idnumber, 'lang-eu')) {
+                    $label = get_string('coursesinbasque', 'theme_moove');
+                }
+
+                $categorylanguagecards[] = [
+                    'name' => $label,
+                    'url' => (new moodle_url('/course/index.php', ['categoryid' => $childcategory->id]))->out(false),
+                ];
+            }
+
+            if (!empty($categorylanguagecards) && !$PAGE->user_is_editing()) {
+                $showcategorymaincontent = false;
+            }
+        }
+    }
+}
+
 $templatecontext = [
     'sitename' => format_string($SITE->shortname, true, ['context' => \core\context\course::instance(SITEID), "escape" => false]),
     'output' => $OUTPUT,
@@ -116,6 +148,9 @@ $templatecontext = [
     'headercontent' => $headercontent,
     'addblockbutton' => $addblockbutton,
     'showcustomnavsearch' => false,
+    'hascategorylanguagecards' => !empty($categorylanguagecards),
+    'categorylanguagecards' => $categorylanguagecards,
+    'showcategorymaincontent' => $showcategorymaincontent,
 ];
 
 $themesettings = new \theme_moove\util\settings();

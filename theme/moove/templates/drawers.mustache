@@ -107,6 +107,18 @@
 
         {{{ output.full_header }}}
 
+        {{#hascategorylanguagecards}}
+            <section class="izfe-category-language-nav">
+                <div class="moove-container-fluid">
+                    <div class="izfe-category-language-nav__cards">
+                        {{#categorylanguagecards}}
+                        <a class="izfe-category-language-nav__card" href="{{url}}">{{name}}</a>
+                        {{/categorylanguagecards}}
+                    </div>
+                </div>
+            </section>
+        {{/hascategorylanguagecards}}
+
         <div id="topofscroll" class="main-inner">
             <div class="drawer-toggles d-flex">
                 {{#courseindex}}
@@ -167,7 +179,9 @@
                                 </div>
                             </div>
                         {{/overflow}}
-                        {{{ output.main_content }}}
+                        <div class="{{^showcategorymaincontent}}d-none{{/showcategorymaincontent}}">
+                            {{{ output.main_content }}}
+                        </div>
                         {{{ output.activity_navigation }}}
                         {{{ output.course_content_footer }}}
 
