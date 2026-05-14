@@ -27,29 +27,6 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->libdir . '/behat/lib.php');
 require_once($CFG->dirroot . '/course/lib.php');
 
-if (!function_exists('theme_moove_izfe_replace_home_label')) {
-    /**
-     * Replace the primary navigation home label with the IZFE course catalogue label.
-     *
-     * @param array $items
-     * @return void
-     */
-    function theme_moove_izfe_replace_home_label(array &$items): void {
-        foreach ($items as &$item) {
-            if (!empty($item['key']) && $item['key'] === 'home') {
-                $item['text'] = get_string('coursecataloglabel', 'theme_moove');
-                if (!empty($item['title'])) {
-                    $item['title'] = get_string('coursecataloglabel', 'theme_moove');
-                }
-            }
-
-            if (!empty($item['children']) && is_array($item['children'])) {
-                theme_moove_izfe_replace_home_label($item['children']);
-            }
-        }
-    }
-}
-
 // Add block button in editing mode.
 $addblockbutton = $OUTPUT->addblockbutton();
 
@@ -110,8 +87,6 @@ if ($PAGE->has_secondary_navigation()) {
 $primary = new core\navigation\output\primary($PAGE);
 $renderer = $PAGE->get_renderer('core');
 $primarymenu = $primary->export_for_template($renderer);
-theme_moove_izfe_replace_home_label($primarymenu['moremenu']['nodearray']);
-theme_moove_izfe_replace_home_label($primarymenu['mobileprimarynav']);
 $buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
 // If the settings menu will be included in the header then don't add it here.
 $regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;

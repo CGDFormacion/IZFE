@@ -26,6 +26,7 @@ namespace theme_moove\output;
 
 use theme_config;
 use core\context\course as context_course;
+use stdClass;
 use moodle_url;
 use html_writer;
 use theme_moove\output\core_course\activity_navigation;
@@ -39,6 +40,15 @@ use theme_moove\util\settings;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class core_renderer extends \theme_boost\output\core_renderer {
+    /**
+     * Whether the current page should display the IZFE course catalogue heading.
+     *
+     * @return bool
+     */
+    protected function should_show_course_catalog_heading(): bool {
+        return $this->page->pagetype === 'course-index-category';
+    }
+
     /**
      * The standard tags (meta tags, links to stylesheets and JavaScript, etc.)
      * that should be included in the <head> tag. Designed to be called in theme
@@ -79,6 +89,51 @@ class core_renderer extends \theme_boost\output\core_renderer {
         }
 
         return $output;
+    }
+
+    /**
+     * Render the full header, overriding the category title when required.
+     *
+     * @return string
+     */
+    public function full_header() {
+        $pagetype = $this->page->pagetype;
+        $homepage = get_home_page();
+        $homepagetype = null;
+        if ($homepage == HOMEPAGE_MY || $homepage == HOMEPAGE_MYCOURSES) {
+            $homepagetype = 'my-index';
+        } else if ($homepage == HOMEPAGE_SITE) {
+            $homepagetype = 'site-index';
+        }
+        if (
+            $this->page->include_region_main_settings_in_header_actions() &&
+                !$this->page->blocks->is_block_present('settings')
+        ) {
+            $this->page->add_header_action(html_writer::div(
+                $this->region_main_settings_menu(),
+                'd-print-none',
+                ['id' => 'region-main-settings-menu']
+            ));
+        }
+
+        $header = new stdClass();
+        $header->settingsmenu = $this->context_header_settings_menu();
+        if ($this->should_show_course_catalog_heading()) {
+            $header->contextheader = $this->context_header([
+                'heading' => get_string('coursecataloglabel', 'theme_moove'),
+            ]);
+        } else {
+            $header->contextheader = $this->context_header();
+        }
+        $header->hasnavbar = empty($this->page->layout_options['nonavbar']);
+        $header->navbar = $this->navbar();
+        $header->pageheadingbutton = $this->page_heading_button();
+        $header->courseheader = $this->course_header();
+        $header->headeractions = $this->page->get_header_actions();
+        if (!empty($pagetype) && !empty($homepagetype) && $pagetype == $homepagetype) {
+            $header->welcomemessage = \core_user::welcome_message();
+        }
+        return $this->render_from_template('core/full_header', $header);
     }
 
     /**
