@@ -32,3 +32,4 @@ $string['frontpagenewstaffimagealt'] = 'Langile berrientzako prestakuntza';
 $string['frontpagecoursestitle'] = 'Prestakuntza planeko ikastaroak';
 $string['frontpagecoursesbutton'] = 'Prestakuntza planeko ikastaroak';
 $string['frontpagecoursesimagealt'] = 'Prestakuntza planeko ikastaroak';
+$string['coursecataloglabel'] = 'Ikastaroen katalogoa';
