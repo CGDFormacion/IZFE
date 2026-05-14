@@ -28,6 +28,7 @@ use stdClass;
 use moodle_url;
 use html_writer;
 use coursecat_helper;
+use core_course_category;
 use core_course_list_element;
 use theme_moove\util\course;
 use core\lang_string;
@@ -39,6 +40,57 @@ use core\lang_string;
  * $renderer = $PAGE->get_renderer('core','course');
  */
 class course_renderer extends \core_course_renderer {
+    /**
+     * Renders a category page, showing Basque courses by default when the
+     * category is split into language subcategories.
+     *
+     * @param int $categoryid
+     * @return string
+     */
+    public function course_category($categoryid) {
+        $output = parent::course_category($categoryid);
+
+        if (empty($categoryid)) {
+            return $output;
+        }
+
+        $category = core_course_category::get($categoryid, IGNORE_MISSING);
+        if (!$category || !$category->is_uservisible()) {
+            return $output;
+        }
+
+        $defaultlanguagecategory = null;
+        foreach ($category->get_children() as $childcategory) {
+            if (!empty($childcategory->visible) && str_starts_with((string) $childcategory->idnumber, 'lang-eu')) {
+                $defaultlanguagecategory = $childcategory;
+                break;
+            }
+        }
+
+        if (!$defaultlanguagecategory) {
+            return $output;
+        }
+
+        $chelper = new coursecat_helper();
+        $chelper->set_show_courses(self::COURSECAT_SHOW_COURSES_EXPANDED)
+            ->set_attributes(['class' => 'courses izfe-default-language-courses'])
+            ->set_courses_display_options(['recursive' => false]);
+
+        $courses = $defaultlanguagecategory->get_courses($chelper->get_courses_display_options());
+        $totalcount = $defaultlanguagecategory->get_courses_count($chelper->get_courses_display_options());
+
+        if (!$totalcount) {
+            return $output;
+        }
+
+        $output .= html_writer::div(
+            $this->coursecat_courses($chelper, $courses, $totalcount),
+            'izfe-default-language-courses-wrap'
+        );
+
+        return $output;
+    }
+
     /**
      * Renders the list of courses
      *
